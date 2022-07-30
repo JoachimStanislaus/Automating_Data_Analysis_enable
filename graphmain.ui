@@ -128,6 +128,19 @@
      <string>Vacancy</string>
     </property>
    </widget>
+   <widget class="QCheckBox" name="Shortfall_CheckBox">
+    <property name="geometry">
+     <rect>
+      <x>440</x>
+      <y>170</y>
+      <width>165</width>
+      <height>37</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Shortfall</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

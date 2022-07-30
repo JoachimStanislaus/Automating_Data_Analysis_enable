@@ -11,10 +11,28 @@ def read_file(FileDir): # Takes in file directory & Reads it
     return (pd.read_csv(FileDir[0]))
 
 def main(centre,checklist):
-    print(read_file(fname))
+    CreatedDataframe = (read_file(fname))
     print('This is main')
     print(centre)
     print(checklist)
+    totalchecklist = ''
+    countchecklist = 0
+    for x in checklist:
+        if countchecklist < len(checklist)-1:
+            totalchecklist += x + ' , '
+        else:
+            totalchecklist += x
+        countchecklist +=1
+    CreatedDataframe["RepDate"] = pd.to_datetime(CreatedDataframe["RepDate"],format = "%d/%m/%Y")
+    SortedbyName = CreatedDataframe.set_index('SPName')
+    SortedbyName['Shortfall'] = SortedbyName['Capacity'] - (SortedbyName['Enrollment'] + SortedbyName['Waitlist'])
+    SortedbyName = SortedbyName.loc[centre]
+    SortedbyName.sort_values(by='RepDate',inplace=True)
+    SortedbyName.set_index("RepDate", inplace = True)
+    SortedbyName[checklist].plot(marker='.',markersize=10, title=f'{totalchecklist} {centre}').get_figure().savefig(f'{totalchecklist}{centre}.png')
+    #plt.show()
+
+
 
 # GUI Display
 class UI(QMainWindow):
@@ -32,9 +50,7 @@ class UI(QMainWindow):
         self.Enrollment_CB = self.findChild(QCheckBox,"Enrollment_CheckBox")
         self.Waitlist_CB = self.findChild(QCheckBox,"Waitlist_CheckBox")
         self.Vacancy_CB = self.findChild(QCheckBox,"Vacancy_CheckBox")
-        # self.port_to_button = self.findChild(QPushButton,"Port_To_Button")
-        # self.port_to_label = self.findChild(QLabel,"Port_To_Label")
-        # self.sheet_name_text = self.findChild(QTextEdit,"Sheet_Name_Text")
+        self.Shortfall_CB = self.findChild(QCheckBox,"Shortfall_CheckBox")
         self.submit_button = self.findChild(QPushButton,"Submit")
         self.quit_button = self.findChild(QPushButton,"Quit")
 
@@ -47,7 +63,7 @@ class UI(QMainWindow):
         self.show()
 
     def checked_box(self): #checks which boxes are ticked and adds them to a list
-        list_of_checkboxes = [self.Capacity_CB, self.Enrollment_CB, self.Waitlist_CB, self.Vacancy_CB]
+        list_of_checkboxes = [self.Capacity_CB, self.Enrollment_CB, self.Waitlist_CB, self.Vacancy_CB, self.Shortfall_CB]
         list_of_checked = []
         for x in list_of_checkboxes:
             if x.isChecked() == True: # check if box is checked if checked append the name into a list
