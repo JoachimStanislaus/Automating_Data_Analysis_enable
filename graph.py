@@ -29,7 +29,7 @@ def main(centre,checklist):
     SortedbyName = SortedbyName.loc[centre]
     SortedbyName.sort_values(by='RepDate',inplace=True)
     SortedbyName.set_index("RepDate", inplace = True)
-    SortedbyName[checklist].plot(marker='.',markersize=10, title=f'{totalchecklist} {centre}').get_figure().savefig(f'{totalchecklist}{centre}.png')
+    SortedbyName[checklist].plot(marker='.',markersize=10, title=f'{totalchecklist} {centre}', figsize=(10,6)).get_figure().savefig(f'{totalchecklist}{centre}.png')
     #plt.show()
 
 
