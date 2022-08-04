@@ -4,7 +4,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 import sys
 from PyQt5 import uic,QtWidgets
-from PyQt5.QtWidgets import QMainWindow, QApplication, QPushButton, QLabel, QFileDialog, QCheckBox, QComboBox, QListWidget
+from PyQt5.QtWidgets import QMainWindow, QApplication, QPushButton, QLabel, QFileDialog, QCheckBox, QComboBox, QListWidget, QLineEdit
 
 def read_file(FileDir): # Takes in file directory & Reads it
     #print(type(FileDir[0]))
@@ -36,9 +36,12 @@ def main(centre,checklist):
         SortedbyName = (SortedbyName.loc[start_date:end_date])
     else:
         SortedbyName.set_index("RepDate", inplace = True)
+        start_date = datetime.date(int(start_year),1,1)
+        end_date = datetime.date(int(end_year),12,31)
+        SortedbyName = (SortedbyName.loc[start_date:end_date])
         #print(SortedbyName)
     
-    SortedbyName[checklist].plot(marker='.',markersize=10, title=f'{totalchecklist} {centre}', figsize=(10,6)).get_figure().savefig(f'{totalchecklist}.png')
+    SortedbyName[checklist].plot(marker='.',markersize=10, title=f'{Graph_Title_Text}', figsize=(10,6)).get_figure().savefig(f'{Graph_Title_Text}.png')
     #plt.show()
 
 
@@ -62,6 +65,7 @@ class UI(QMainWindow):
         self.Shortfall_CB = self.findChild(QCheckBox,"Shortfall_CheckBox")
         self.Start_Year_Scroller = self.findChild(QComboBox,"Start_Year")
         self.End_Year_Scroller = self.findChild(QComboBox,"End_Year")
+        self.Graph_Title  = self.findChild(QLineEdit,"Graph_Title")
         self.submit_button = self.findChild(QPushButton,"Submit")
         self.quit_button = self.findChild(QPushButton,"Quit")
 
@@ -94,9 +98,10 @@ class UI(QMainWindow):
         self.close() # closes the window
     
     def submit_click(self): # to run when submit button is clicked
-        global start_year, end_year
+        global start_year, end_year, Graph_Title_Text
         start_year = self.Start_Year_Scroller.currentText()
         end_year = self.End_Year_Scroller.currentText()
+        Graph_Title_Text = self.Graph_Title.text()
         #print(self.checked_box())
         self.close() # closes the window
         main(Scroll_Selected_Items,self.checked_box())
@@ -106,9 +111,12 @@ class UI(QMainWindow):
         self.Scroll_List.setMinimumWidth(self.Scroll_List.sizeHintForColumn(0)) # adjust scroller size to fit biggest string
         emptylst=[]
         for x in ((read_file(fname))['RepDate'].unique()):
-            x = (x[-4:])
+            x = int(x[-4:])
             emptylst.append(x)
         sortedlst = (list(set(emptylst)))
+        sortedlst.sort()
+        sortedlst = [str(i) for i in sortedlst]
+        #print(sortedlst)
         self.Start_Year_Scroller.addItems(sortedlst) # search for centre names and puts them in a list into the scroller
         self.Start_Year_Scroller.adjustSize() # adjust scroller size to fit biggest string
         self.End_Year_Scroller.addItems(sortedlst) # search for centre names and puts them in a list into the scroller
