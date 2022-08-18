@@ -137,7 +137,7 @@
       <x>470</x>
       <y>80</y>
       <width>256</width>
-      <height>361</height>
+      <height>301</height>
      </rect>
     </property>
     <property name="selectionMode">
@@ -211,6 +211,32 @@
       <width>261</width>
       <height>39</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="Demand_CheckBox">
+    <property name="geometry">
+     <rect>
+      <x>250</x>
+      <y>430</y>
+      <width>165</width>
+      <height>37</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Demand</string>
+    </property>
+   </widget>
+   <widget class="QListWidget" name="Service_List">
+    <property name="geometry">
+     <rect>
+      <x>470</x>
+      <y>390</y>
+      <width>256</width>
+      <height>192</height>
+     </rect>
+    </property>
+    <property name="selectionMode">
+     <enum>QAbstractItemView::MultiSelection</enum>
     </property>
    </widget>
   </widget>

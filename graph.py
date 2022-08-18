@@ -26,6 +26,7 @@ def main(centre,checklist):
     CreatedDataframe["RepDate"] = pd.to_datetime(CreatedDataframe["RepDate"],format = "%d/%m/%Y")
     SortedbyName = CreatedDataframe.set_index('SPName')
     SortedbyName['Shortfall'] = SortedbyName['Capacity'] - (SortedbyName['Enrollment'] + SortedbyName['Waitlist'])
+    SortedbyName['Demand'] = (SortedbyName['Enrollment'] + SortedbyName['Waitlist'])
     SortedbyName = SortedbyName.loc[centre]
     SortedbyName.sort_values(by='RepDate',inplace=True)
     #print(SortedbyName)
@@ -58,11 +59,13 @@ class UI(QMainWindow):
         self.port_from_button = self.findChild(QPushButton,"Browse")
         self.port_from_label = self.findChild(QLabel,"FileName")
         self.Scroll_List = self.findChild(QListWidget,"Scroll_List")
+        self.Service_List = self.findChild(QListWidget,"Service_List")
         self.Capacity_CB = self.findChild(QCheckBox,"Capacity_CheckBox")
         self.Enrollment_CB = self.findChild(QCheckBox,"Enrollment_CheckBox")
         self.Waitlist_CB = self.findChild(QCheckBox,"Waitlist_CheckBox")
         self.Vacancy_CB = self.findChild(QCheckBox,"Vacancy_CheckBox")
         self.Shortfall_CB = self.findChild(QCheckBox,"Shortfall_CheckBox")
+        self.Demand_CB = self.findChild(QCheckBox,"Demand_CheckBox")
         self.Start_Year_Scroller = self.findChild(QComboBox,"Start_Year")
         self.End_Year_Scroller = self.findChild(QComboBox,"End_Year")
         self.Graph_Title  = self.findChild(QLineEdit,"Graph_Title")
@@ -71,6 +74,7 @@ class UI(QMainWindow):
 
         # Click the dropdown box
         self.Scroll_List.itemClicked.connect(self.printItemText)
+        self.Service_List.itemClicked.connect(self.printServiceText)
         self.port_from_button.clicked.connect(self.port_from_clicker)
         self.submit_button.clicked.connect(self.submit_click)
         self.quit_button.clicked.connect(self.quit_click)
@@ -82,12 +86,30 @@ class UI(QMainWindow):
         items = self.Scroll_List.selectedItems()
         global Scroll_Selected_Items
         Scroll_Selected_Items = []
+
         for i in range(len(items)):
-            Scroll_Selected_Items.append(str(self.Scroll_List.selectedItems()[i].text()))    
+            Scroll_Selected_Items.append(str(self.Scroll_List.selectedItems()[i].text()))
         print(Scroll_Selected_Items)
 
+    def printServiceText(self):
+        Service = self.Service_List.selectedItems()
+        global Scroll_Selected_Items
+        Scroll_Selected_Items = []
+        holderlst = []
+        centrelist = (read_file(fname))['SPName'].unique()
+
+        for i in range(len(Service)):
+            Scroll_Selected_Items.append(str(self.Service_List.selectedItems()[i].text()))
+        #print(Scroll_Selected_Items)
+        for x in Scroll_Selected_Items:
+            for centre in centrelist:
+                if x in centre:
+                    holderlst.append(centre)
+        Scroll_Selected_Items = holderlst
+        
+
     def checked_box(self): #checks which boxes are ticked and adds them to a list
-        list_of_checkboxes = [self.Capacity_CB, self.Enrollment_CB, self.Waitlist_CB, self.Vacancy_CB, self.Shortfall_CB]
+        list_of_checkboxes = [self.Capacity_CB, self.Enrollment_CB, self.Waitlist_CB, self.Vacancy_CB, self.Shortfall_CB, self.Demand_CB]
         list_of_checked = []
         for x in list_of_checkboxes:
             if x.isChecked() == True: # check if box is checked if checked append the name into a list
@@ -109,6 +131,10 @@ class UI(QMainWindow):
     def load_data(self): # Loads data and puts the different centre names into the scroller
         self.Scroll_List.addItems((read_file(fname))['SPName'].unique()) # search for centre names and puts them in a list into the scroller
         self.Scroll_List.setMinimumWidth(self.Scroll_List.sizeHintForColumn(0)) # adjust scroller size to fit biggest string
+        
+        self.Service_List.addItems(['(ADH)','(Hostel)','(CDH)','(DAC)','(SW)']) # Adds Different Services Offered and puts them in a list into the scroller
+        self.Service_List.setMinimumWidth(self.Scroll_List.sizeHintForColumn(0)) # adjust scroller size to fit biggest string
+        
         emptylst=[]
         for x in ((read_file(fname))['RepDate'].unique()):
             x = int(x[-4:])
