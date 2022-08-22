@@ -125,7 +125,7 @@ class UI(QMainWindow):
         end_year = self.End_Year_Scroller.currentText()
         Graph_Title_Text = self.Graph_Title.text()
         #print(self.checked_box())
-        self.close() # closes the window
+        #self.close() # closes the window
         main(Scroll_Selected_Items,self.checked_box())
     
     def load_data(self): # Loads data and puts the different centre names into the scroller
