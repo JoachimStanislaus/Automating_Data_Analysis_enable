@@ -14,21 +14,11 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QComboBox" name="Scroller">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>100</y>
-      <width>601</width>
-      <height>39</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QPushButton" name="Browse">
     <property name="geometry">
      <rect>
-      <x>430</x>
-      <y>20</y>
+      <x>540</x>
+      <y>10</y>
       <width>187</width>
       <height>57</height>
      </rect>
@@ -54,7 +44,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>320</y>
+      <y>510</y>
       <width>187</width>
       <height>57</height>
      </rect>
@@ -67,7 +57,7 @@
     <property name="geometry">
      <rect>
       <x>250</x>
-      <y>320</y>
+      <y>510</y>
       <width>187</width>
       <height>57</height>
      </rect>
@@ -79,8 +69,8 @@
    <widget class="QCheckBox" name="Capacity_CheckBox">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>170</y>
+      <x>20</x>
+      <y>310</y>
       <width>165</width>
       <height>37</height>
      </rect>
@@ -92,8 +82,8 @@
    <widget class="QCheckBox" name="Enrollment_CheckBox">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>230</y>
+      <x>20</x>
+      <y>370</y>
       <width>181</width>
       <height>37</height>
      </rect>
@@ -105,8 +95,8 @@
    <widget class="QCheckBox" name="Waitlist_CheckBox">
     <property name="geometry">
      <rect>
-      <x>240</x>
-      <y>170</y>
+      <x>250</x>
+      <y>310</y>
       <width>165</width>
       <height>37</height>
      </rect>
@@ -118,8 +108,8 @@
    <widget class="QCheckBox" name="Vacancy_CheckBox">
     <property name="geometry">
      <rect>
-      <x>240</x>
-      <y>230</y>
+      <x>250</x>
+      <y>370</y>
       <width>165</width>
       <height>37</height>
      </rect>
@@ -131,14 +121,122 @@
    <widget class="QCheckBox" name="Shortfall_CheckBox">
     <property name="geometry">
      <rect>
-      <x>440</x>
-      <y>170</y>
+      <x>20</x>
+      <y>430</y>
       <width>165</width>
       <height>37</height>
      </rect>
     </property>
     <property name="text">
      <string>Shortfall</string>
+    </property>
+   </widget>
+   <widget class="QListWidget" name="Scroll_List">
+    <property name="geometry">
+     <rect>
+      <x>470</x>
+      <y>80</y>
+      <width>256</width>
+      <height>301</height>
+     </rect>
+    </property>
+    <property name="selectionMode">
+     <enum>QAbstractItemView::MultiSelection</enum>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="Start_Year">
+    <property name="geometry">
+     <rect>
+      <x>220</x>
+      <y>90</y>
+      <width>231</width>
+      <height>39</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="End_Year">
+    <property name="geometry">
+     <rect>
+      <x>220</x>
+      <y>160</y>
+      <width>231</width>
+      <height>39</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>100</y>
+      <width>131</width>
+      <height>33</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Start Year</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>170</y>
+      <width>131</width>
+      <height>33</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>End Year</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>240</y>
+      <width>131</width>
+      <height>33</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Graph Title</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="Graph_Title">
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>240</y>
+      <width>261</width>
+      <height>39</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="Demand_CheckBox">
+    <property name="geometry">
+     <rect>
+      <x>250</x>
+      <y>430</y>
+      <width>165</width>
+      <height>37</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Demand</string>
+    </property>
+   </widget>
+   <widget class="QListWidget" name="Service_List">
+    <property name="geometry">
+     <rect>
+      <x>470</x>
+      <y>390</y>
+      <width>256</width>
+      <height>192</height>
+     </rect>
+    </property>
+    <property name="selectionMode">
+     <enum>QAbstractItemView::MultiSelection</enum>
     </property>
    </widget>
   </widget>
